@@ -7,39 +7,66 @@ void DoIPServer::setupTcpSocket() {
 
     server_socket_tcp = socket(AF_INET, SOCK_STREAM, 0);
 
+    if (server_socket_tcp >=0) {
+        std::cout << "[Server] TCP socket created successfully" << std::endl;
+    } else {
+        std::cout << "[Server] Failed to create TCP socket" << std::endl;
+        return;
+    }
+
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
     serverAddress.sin_port = htons(_ServerPort);
     
     //binds the socket to the address and port number
-    bind(server_socket_tcp, (struct sockaddr *)&serverAddress, sizeof(serverAddress));     
+    if (bind(server_socket_tcp, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) == 0) {
+        std::cout << "[Server] TCP socket bound to port " << ntohs(serverAddress.sin_port) << std::endl;
+    } else {
+        std::cout << "[Server] Failed to bind TCP socket to port " << ntohs(serverAddress.sin_port) << std::endl;
+    } 
 }
 
 /*
  *  Listen till a client attempts a connection and accepts it
  */
 void DoIPServer::listenTcpConnection() {
-    //waits till client approach to make connection
-    listen(server_socket_tcp, 5);                                                          
+    if (listen(server_socket_tcp, 5) == 0) {
+        std::cout << "[Server] Listening for incoming TCP connections..." << std::endl;
+    } else {
+        std::cout << "[Server] Failed to listen on TCP socket" << std::endl;
+        return;
+    }
+
     client_socket_tcp = accept(server_socket_tcp, (struct sockaddr*) NULL, NULL);
+    if (client_socket_tcp >= 0) {
+        std::cout << "[Server] TCP connection accepted" << std::endl;
+    } else {
+        std::cout << "[Server] Failed to accept TCP connection" << std::endl;
+    }
 }
 
-void DoIPServer::setupUdpSocket(){
-    
+void DoIPServer::setupUdpSocket() {
     server_socket_udp = socket(AF_INET, SOCK_DGRAM, 0);
-    
+
+    if (server_socket_udp >= 0) {
+        std::cout << "[Server] UDP socket created successfully" << std::endl;
+    } else {
+        std::cout << "[Server] Failed to create UDP socket" << std::endl;
+        return;
+    }
+
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
     serverAddress.sin_port = htons(_ServerPort);
-    
-    if(server_socket_udp < 0)
-        std::cout << "Error setting up a udp socket" << std::endl;
-    
-    //binds the socket to any IP Address and the Port Number 13400
-    bind(server_socket_udp, (struct sockaddr *)&serverAddress, sizeof(serverAddress)); 
-    
-    //setting the IP Address for Multicast
+
+    if (bind(server_socket_udp, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) == 0) {
+        std::cout << "[Server] UDP socket bound to port " << ntohs(serverAddress.sin_port) << std::endl;
+    } else {
+        std::cout << "[Server] Failed to bind UDP socket to port " << ntohs(serverAddress.sin_port) << std::endl;
+    }
+
     setMulticastGroup("224.0.0.2");
+    std::cout << "[Server] Joined multicast group 224.0.0.2" << std::endl;
 }
 
 /**
@@ -58,10 +85,12 @@ void DoIPServer::aliveCheckTimeout() {
 void DoIPServer::closeSocket() {
     close(server_socket_tcp);
     close(client_socket_tcp);
+    std::cout << "[Server] TCP,UDP connection closed" << std::endl;
 }
 
 void DoIPServer::closeUdpSocket() {
     close(server_socket_udp);
+    std::cout << "[Server] UDP connection closed" << std::endl;
 }
 
 
@@ -96,21 +125,28 @@ void DoIPServer::triggerDisconnection() {
  *              or -1 if error occurred     
  */
 int DoIPServer::receiveTcpMessage() {
-
     int readedBytes = recv(client_socket_tcp, data, _MaxDataSize, 0);
+    std::cout << "[Server] TCP message received ("<< readedBytes << " bytes)" << std::endl;
+    if (readedBytes > 0 && !aliveCheckTimer.timeout) {
+        //
+        std::cout << "[Server] Received Data (Hex): ";
+        for (int i = 0; i < readedBytes; ++i) printf("%02X ", (unsigned char)data[i]);
+        std::cout << std::endl;
+        //
+        std::cout << "[Server] Valid TCP message received. Processing..." << std::endl;
 
-    if(readedBytes > 0 && !aliveCheckTimer.timeout) {        
-        //if alive check timouts should be possible, reset timer when message received
-        if(aliveCheckTimer.active) {
+        if (aliveCheckTimer.active) {
+            std::cout << "[Server] Alive timer is active. Resetting timer..." << std::endl;
             aliveCheckTimer.resetTimer();
         }
-    
+
         int sendedBytes = reactToReceivedTcpMessage(readedBytes);
-        
+        std::cout << "[Server] Response sent to client (" << sendedBytes << " bytes)" << std::endl;
         return sendedBytes;
     }
+
+    std::cout << "[Server] Invalid or expired TCP message. No response sent." << std::endl;
     return -1;
-      
 }
 
 /*
@@ -142,7 +178,6 @@ int DoIPServer::reactToReceivedTcpMessage(int readedBytes){
             //start routing activation handler with the received message
             unsigned char result = parseRoutingActivation(data);
             unsigned char clientAddress [2] = {data[8], data[9]};
-
             unsigned char* message = createRoutingActivationResponse(clientAddress, result);
             sendedBytes = sendMessage(message, _GenericHeaderLength + _ActivationResponseLength);
 
@@ -155,7 +190,6 @@ int DoIPServer::reactToReceivedTcpMessage(int readedBytes){
                 routedClientAddress = new unsigned char[2];
                 routedClientAddress[0] = data[8];
                 routedClientAddress[1] = data[9];
-
                 //start alive check timer
                 if(!aliveCheckTimer.active) {
                     aliveCheckTimer.cb = std::bind(&DoIPServer::aliveCheckTimeout,this);
@@ -171,10 +205,8 @@ int DoIPServer::reactToReceivedTcpMessage(int readedBytes){
         }
 
         case PayloadType::DIAGNOSTICMESSAGE: {
-
-            unsigned char target_address [2] = {data[10], data[11]};           
+            unsigned char target_address [2] = {data[10], data[11]};
             bool ack = notify_application(target_address);
-
             if(ack)
                 parseDiagnosticMessage(diag_callback, routedClientAddress, data, readedBytes - _GenericHeaderLength);
 
@@ -195,20 +227,23 @@ int DoIPServer::reactToReceivedTcpMessage(int readedBytes){
  * @return      amount of bytes which were send back to client
  *              or -1 if error occurred     
  */
-int DoIPServer::receiveUdpMessage(){
-    
-
+int DoIPServer::receiveUdpMessage() {
     unsigned int length = sizeof(serverAddress);   
     int readedBytes = recvfrom(server_socket_udp, data, _MaxDataSize, 0, (struct sockaddr *) &serverAddress, &length);
-        
-    if(readedBytes > 0 && !aliveCheckTimer.timeout) {
     
+    std::cout << "[Server] UDP message received" << std::endl;
+
+    if (readedBytes > 0 && !aliveCheckTimer.timeout) {
+        std::cout << "[Server] Valid UDP message received. Processing..." << std::endl;
         int sendedBytes = reactToReceivedUdpMessage(readedBytes);
-    
+        std::cout << "[Server] Response sent to client (" << sendedBytes << " bytes)" << std::endl;
         return sendedBytes;
     }
+
+    std::cout << "[Server] Invalid or expired UDP message. No response sent." << std::endl;
     return -1;
 }
+
 
 
 /*
@@ -467,14 +502,14 @@ int DoIPServer::sendVehicleAnnouncement() {
     
     if(setAddressError != 0)
     {
-        std::cout <<"Broadcast Address set succesfully"<<std::endl;
+        std::cout <<"[server] Broadcast Address set succesfully"<<std::endl;
     }
     
     int socketError = setsockopt(server_socket_udp, SOL_SOCKET, SO_BROADCAST, &broadcast, sizeof(broadcast) );
          
     if(socketError == 0)
     {
-        std::cout << "Broadcast Option set successfully" << std::endl;
+        std::cout << "[server] Broadcast Option set successfully" << std::endl;
     }
     
     int sendedmessage;
@@ -488,11 +523,11 @@ int DoIPServer::sendVehicleAnnouncement() {
         
         if(sendedmessage > 0)
         {
-            std::cout<<"Sending Vehicle Announcement"<<std::endl;
+            std::cout<<"[server] Sending Vehicle Announcement"<<std::endl;
         }
         else
         {
-            std::cout<<"Failed Sending Vehicle Announcement"<<std::endl;
+            std::cout<<"[server] Failed Sending Vehicle Announcement"<<std::endl;
         }   
         usleep(A_DoIP_Announce_Interval*1000);
         
