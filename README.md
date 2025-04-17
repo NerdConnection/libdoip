@@ -5,7 +5,7 @@ C/C++ library for Diagnostics over IP (DoIP)
 
 1. To install the library on the system, first get the source files with:
 ```
-git clone https://github.com/GerritRiesch94/libdoip
+git clone https://github.com/NerdConnection/libdoip.git
 ```
 
 2. Enter the directory 'libdoip' and build the library with:
@@ -60,3 +60,42 @@ If this finish successfully you should have a executable called `testRun` in the
 ```
 ./testRun --gtest_output="xml:./testOutput.xml"
 ```
+
+## 🧪 Scenario Test Descriptions
+
+The `/test` directory contains individual test cases designed to verify key functionalities of the DoIP protocol implementation.
+
+### Test Files
+
+- `VehicleAnnouncement.cpp`  
+- `RoutingActivation.cpp`  
+- `RequestVehicleInfomation.cpp`  
+- `DiagnosticMessage.cpp`  
+
+Each of these files is compiled into a **separate executable** to allow for isolated scenario testing.
+
+### 🔨 Build Instructions
+
+To build all test executables, run:
+
+```bash
+cd test
+make
+```
+
+### This will generate the following binaries:
+
+- VehicleAnnouncementTestRun
+
+- RoutingActivationTestRun
+
+- RequestVehicleInfomationTestRun
+
+- DiagnosticMessageTestRun
+
+### Each binary corresponds to a specific scenario and can be executed independently:
+
+- ./VehicleAnnouncementTestRun
+- ./RoutingActivationTestRun
+- ./RequestVehicleInfomationTestRun
+- ./DiagnosticMessageTestRun
