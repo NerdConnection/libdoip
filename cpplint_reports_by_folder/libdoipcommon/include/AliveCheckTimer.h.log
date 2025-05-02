@@ -1,0 +1,12 @@
+./libdoipcommon/include/AliveCheckTimer.h:0:  No copyright message found.  You should have a line: "Copyright [year] <Copyright Owner>"  [legal/copyright] [5]
+./libdoipcommon/include/AliveCheckTimer.h:1:  #ifndef header guard has wrong style, please use: LIBDOIP_LIBDOIPCOMMON_INCLUDE_ALIVECHECKTIMER_H_  [build/header_guard] [5]
+./libdoipcommon/include/AliveCheckTimer.h:32:  #endif line should be "#endif  // LIBDOIP_LIBDOIPCOMMON_INCLUDE_ALIVECHECKTIMER_H_"  [build/header_guard] [5]
+./libdoipcommon/include/AliveCheckTimer.h:4:  <thread> is an unapproved C++11 header.  [build/c++11] [5]
+./libdoipcommon/include/AliveCheckTimer.h:13:  public: should be indented +1 space inside class AliveCheckTimer  [whitespace/indent] [3]
+./libdoipcommon/include/AliveCheckTimer.h:17:  Line ends in whitespace.  Consider deleting these extra spaces.  [whitespace/end_of_line] [4]
+./libdoipcommon/include/AliveCheckTimer.h:22:  Line ends in whitespace.  Consider deleting these extra spaces.  [whitespace/end_of_line] [4]
+./libdoipcommon/include/AliveCheckTimer.h:24:  Line ends in whitespace.  Consider deleting these extra spaces.  [whitespace/end_of_line] [4]
+./libdoipcommon/include/AliveCheckTimer.h:25:  private: should be indented +1 space inside class AliveCheckTimer  [whitespace/indent] [3]
+./libdoipcommon/include/AliveCheckTimer.h:32:  Could not find a newline character at the end of the file.  [whitespace/ending_newline] [5]
+Done processing ./libdoipcommon/include/AliveCheckTimer.h
+Total errors found: 10

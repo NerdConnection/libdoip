@@ -1,0 +1,8 @@
+./libdoipcommon/src/AliveCheckTimer.cpp:0:  No copyright message found.  You should have a line: "Copyright [year] <Copyright Owner>"  [legal/copyright] [5]
+./libdoipcommon/src/AliveCheckTimer.cpp:7:  Missing space before ( in if(  [whitespace/parens] [5]
+./libdoipcommon/src/AliveCheckTimer.cpp:9:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./libdoipcommon/src/AliveCheckTimer.cpp:17:  Missing space before ( in while(  [whitespace/parens] [5]
+./libdoipcommon/src/AliveCheckTimer.cpp:19:  Missing space before ( in if(  [whitespace/parens] [5]
+./libdoipcommon/src/AliveCheckTimer.cpp:45:  Missing space before ( in if(  [whitespace/parens] [5]
+Done processing ./libdoipcommon/src/AliveCheckTimer.cpp
+Total errors found: 6

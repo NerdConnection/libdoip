@@ -1,0 +1,7 @@
+./libdoipserver/include/RoutingActivationHandler.h:0:  No copyright message found.  You should have a line: "Copyright [year] <Copyright Owner>"  [legal/copyright] [5]
+./libdoipserver/include/RoutingActivationHandler.h:1:  #ifndef header guard has wrong style, please use: LIBDOIP_LIBDOIPSERVER_INCLUDE_ROUTINGACTIVATIONHANDLER_H_  [build/header_guard] [5]
+./libdoipserver/include/RoutingActivationHandler.h:21:  #endif line should be "#endif  // LIBDOIP_LIBDOIPSERVER_INCLUDE_ROUTINGACTIVATIONHANDLER_H_"  [build/header_guard] [5]
+./libdoipserver/include/RoutingActivationHandler.h:15:  Line ends in whitespace.  Consider deleting these extra spaces.  [whitespace/end_of_line] [4]
+./libdoipserver/include/RoutingActivationHandler.h:15:  Use int16/int64/etc, rather than the C type short  [runtime/int] [4]
+Done processing ./libdoipserver/include/RoutingActivationHandler.h
+Total errors found: 5

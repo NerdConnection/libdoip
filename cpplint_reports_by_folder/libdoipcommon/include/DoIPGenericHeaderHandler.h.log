@@ -1,0 +1,6 @@
+./libdoipcommon/include/DoIPGenericHeaderHandler.h:0:  No copyright message found.  You should have a line: "Copyright [year] <Copyright Owner>"  [legal/copyright] [5]
+./libdoipcommon/include/DoIPGenericHeaderHandler.h:1:  #ifndef header guard has wrong style, please use: LIBDOIP_LIBDOIPCOMMON_INCLUDE_DOIPGENERICHEADERHANDLER_H_  [build/header_guard] [5]
+./libdoipcommon/include/DoIPGenericHeaderHandler.h:35:  #endif line should be "#endif  // LIBDOIP_LIBDOIPCOMMON_INCLUDE_DOIPGENERICHEADERHANDLER_H_"  [build/header_guard] [5]
+./libdoipcommon/include/DoIPGenericHeaderHandler.h:28:  Use int16/int64/etc, rather than the C type long  [runtime/int] [4]
+Done processing ./libdoipcommon/include/DoIPGenericHeaderHandler.h
+Total errors found: 4

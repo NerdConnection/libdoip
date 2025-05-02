@@ -1,0 +1,16 @@
+./libdoipcommon/include/DiagnosticMessageHandler.h:0:  No copyright message found.  You should have a line: "Copyright [year] <Copyright Owner>"  [legal/copyright] [5]
+./libdoipcommon/include/DiagnosticMessageHandler.h:1:  #ifndef header guard has wrong style, please use: LIBDOIP_LIBDOIPCOMMON_INCLUDE_DIAGNOSTICMESSAGEHANDLER_H_  [build/header_guard] [5]
+./libdoipcommon/include/DiagnosticMessageHandler.h:22:  #endif line should be "#endif  // LIBDOIP_LIBDOIPCOMMON_INCLUDE_DIAGNOSTICMESSAGEHANDLER_H_"  [build/header_guard] [5]
+./libdoipcommon/include/DiagnosticMessageHandler.h:7:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./libdoipcommon/include/DiagnosticMessageHandler.h:7:  Use int16/int64/etc, rather than the C type short  [runtime/int] [4]
+./libdoipcommon/include/DiagnosticMessageHandler.h:8:  Use int16/int64/etc, rather than the C type short  [runtime/int] [4]
+./libdoipcommon/include/DiagnosticMessageHandler.h:17:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./libdoipcommon/include/DiagnosticMessageHandler.h:17:  Extra space before [  [whitespace/braces] [5]
+./libdoipcommon/include/DiagnosticMessageHandler.h:18:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./libdoipcommon/include/DiagnosticMessageHandler.h:18:  Extra space before [  [whitespace/braces] [5]
+./libdoipcommon/include/DiagnosticMessageHandler.h:18:  Use int16/int64/etc, rather than the C type short  [runtime/int] [4]
+./libdoipcommon/include/DiagnosticMessageHandler.h:19:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./libdoipcommon/include/DiagnosticMessageHandler.h:19:  Extra space before [  [whitespace/braces] [5]
+./libdoipcommon/include/DiagnosticMessageHandler.h:19:  Use int16/int64/etc, rather than the C type short  [runtime/int] [4]
+Done processing ./libdoipcommon/include/DiagnosticMessageHandler.h
+Total errors found: 14

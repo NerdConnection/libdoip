@@ -1,0 +1,5 @@
+./TestRunner.cpp:0:  No copyright message found.  You should have a line: "Copyright [year] <Copyright Owner>"  [legal/copyright] [5]
+./TestRunner.cpp:4:  Tab found; better to use spaces  [whitespace/tab] [1]
+./TestRunner.cpp:5:  Tab found; better to use spaces  [whitespace/tab] [1]
+Done processing ./TestRunner.cpp
+Total errors found: 3
