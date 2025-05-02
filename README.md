@@ -5,7 +5,7 @@ C/C++ library for Diagnostics over IP (DoIP)
 
 1. To install the library on the system, first get the source files with:
 ```
-git clone https://github.com/GerritRiesch94/libdoip
+git clone https://github.com/NerdConnection/libdoip
 ```
 
 2. Enter the directory 'libdoip' and build the library with:
